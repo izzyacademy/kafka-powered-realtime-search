@@ -1,0 +1,124 @@
+# Licensed to IzzyAcademy.com under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# IzzyAcademy.com licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+{{- if .Values.restproxy.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restproxy
+  namespace: "{{ .Values.infrastructure.namespace }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: restproxy
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: restproxy
+    spec:
+      containers:
+      - image: "confluentinc/cp-kafka-rest:6.0.0"
+        name: restproxy
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "750m"
+          limits:
+            memory: "2048Mi"
+            cpu: "1000m"
+        env:
+        - name: KAFKA_REST_HOST_NAME
+          value: "restproxy-external"
+        - name: KAFKA_REST_BOOTSTRAP_SERVERS
+          value: "{{ .Values.broker.bootstrap }}"
+        - name: KAFKA_REST_LISTENERS
+          value: "http://0.0.0.0:8082"
+        - name: KAFKA_REST_SCHEMA_REGISTRY_URL
+          value: "{{ .Values.schemaregistry.url }}"
+        ports:
+        - containerPort: 8082
+          name: client
+        livenessProbe:
+          httpGet:
+            path: /
+            port: client
+          initialDelaySeconds: 5
+          failureThreshold: 10
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: client
+          initialDelaySeconds: 5
+          failureThreshold: 5
+          periodSeconds: 10
+        volumeMounts:
+        - name: "restproxy-volume"
+          mountPath: /restproxy
+      volumes:
+      - name: "restproxy-volume"
+        persistentVolumeClaim:
+          claimName: "restproxy-persistent-storage"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "restproxy-persistent-storage"
+  namespace: "{{ .Values.infrastructure.namespace }}"
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: {{ .Values.infrastructure.storageClass }}
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+# This is the internal load balancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: "restproxy-external"
+  namespace: "{{ .Values.infrastructure.namespace }}"
+spec:
+  type: "LoadBalancer"
+  ports:
+  - port: 8082
+    protocol: TCP
+  selector:
+    app: restproxy
+---
+# This is the external load balancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: "restproxy-internal"
+  namespace: "{{ .Values.infrastructure.namespace }}"
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: "LoadBalancer"
+  ports:
+  - port: 8082
+    protocol: TCP
+  selector:
+    app: restproxy
+
+{{- end }}

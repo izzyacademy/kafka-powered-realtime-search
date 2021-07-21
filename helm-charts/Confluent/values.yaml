@@ -1,0 +1,68 @@
+# Licensed to IzzyAcademy.com under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# IzzyAcademy.com licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Adapted from
+# https://github.com/confluentinc/cp-all-in-one/blob/6.0.0-post/cp-all-in-one-community/docker-compose.yml
+# environment variables here: https://docs.confluent.io/current/installation/docker/config-reference.html
+# https://docs.confluent.io/current/kafka/multi-node.html
+
+# kubectl create ns river
+infrastructure:
+  namespace: "river"
+  storageClass: "managed-premium"
+
+# helm upgrade --install river-zookeeper ./ConfluentDocker --set zookeeper.enabled=true
+# helm uninstall river-zookeeper
+zookeeper:
+  enabled: false
+  tickTime: "2000"
+  connect: "zookeeper1-internal:2181"
+
+# helm upgrade --install river-broker ./ConfluentDocker --set broker.enabled=true
+# helm uninstall river-broker
+broker:
+  enabled: false
+  failureThreshold: 3
+  listeners: "LISTENER_ALPHA://0.0.0.0:9092,LISTENER_BETA://0.0.0.0:9093"
+  protocolMap: "LISTENER_ALPHA:PLAINTEXT,LISTENER_BETA:PLAINTEXT"
+  interBrokerListenerName: "LISTENER_ALPHA"
+  domainSuffix: "izzyacademy.com" # This will be used for external access outside the Kubernetes cluster
+  bootstrap: "broker1-internal:9092"
+
+# helm upgrade --install river-registry ./ConfluentDocker --set schemaregistry.enabled=true
+schemaregistry:
+  enabled: false
+  url: "http://schemaregistry-internal:8081"
+
+# helm upgrade --install river-connect ./ConfluentDocker --set connect.enabled=true
+connect:
+  enabled: false
+  replicas: 1
+  url: "http://connect-internal:8083"
+
+# helm upgrade --install river-restproxy ./ConfluentDocker --set restproxy.enabled=true
+restproxy:
+  enabled: false
+
+# helm upgrade --install river-ksqldbserver ./ConfluentDocker --set ksqldbserver.enabled=true
+ksqldbserver:
+  enabled: false
+
+# helm upgrade --install river-ksqldbcli ./ConfluentDocker --set ksqldbcli.enabled=true
+ksqldbcli:
+  enabled: false
+
+zookeeperCluster:
+  enabled: false

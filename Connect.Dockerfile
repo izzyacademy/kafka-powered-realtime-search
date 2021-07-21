@@ -13,5 +13,5 @@ EXPOSE 8083
 
 ENTRYPOINT ["/usr/local/software/kafka/bin/connect.entrypoint.sh"]
 
-# docker build . -f Connect.Confluent.Dockerfile -t izzyacademy/connect:2.8 -t izzyacademy/connect:latest
+# docker build . -f Connect.Dockerfile -t izzyacademy/connect:2.8 -t izzyacademy/connect:latest
 # docker push izzyacademy/connect:latest && docker push izzyacademy/connect:2.8

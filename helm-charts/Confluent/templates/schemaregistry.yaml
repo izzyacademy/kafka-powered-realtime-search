@@ -1,0 +1,122 @@
+# Licensed to IzzyAcademy.com under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.
+# IzzyAcademy.com licenses this file to You under the Apache License, Version 2.0
+# (the "License"); you may not use this file except in compliance with
+# the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+{{- if .Values.schemaregistry.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: schemaregistry
+  namespace: "{{ .Values.infrastructure.namespace }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: schemaregistry
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: schemaregistry
+    spec:
+      containers:
+      - image: "confluentinc/cp-schema-registry:6.0.0"
+        name: schemaregistry
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "750m"
+          limits:
+            memory: "2048Mi"
+            cpu: "1000m"
+        env:
+        - name: SCHEMA_REGISTRY_HOST_NAME
+          value: "schemaregistry-internal"
+        - name: SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS
+          value: "{{ .Values.broker.bootstrap }}"
+        - name: SCHEMA_REGISTRY_LISTENERS
+          value: "http://0.0.0.0:8081"
+        ports:
+        - containerPort: 8081
+          name: client
+        livenessProbe:
+          httpGet:
+            path: /
+            port: client
+          initialDelaySeconds: 5
+          failureThreshold: 10
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: client
+          initialDelaySeconds: 5
+          failureThreshold: 5
+          periodSeconds: 10
+        volumeMounts:
+        - name: "schemaregistry-volume"
+          mountPath: /schemaregistry
+      volumes:
+      - name: "schemaregistry-volume"
+        persistentVolumeClaim:
+          claimName: "schemaregistry-persistent-storage"
+
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "schemaregistry-persistent-storage"
+  namespace: "{{ .Values.infrastructure.namespace }}"
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: {{ .Values.infrastructure.storageClass }}
+  resources:
+    requests:
+      storage: 1Gi
+
+---
+# This is the internal load balancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: "schemaregistry-external"
+  namespace: "{{ .Values.infrastructure.namespace }}"
+spec:
+  type: "LoadBalancer"
+  ports:
+  - port: 8081
+    protocol: TCP
+  selector:
+    app: schemaregistry
+---
+# This is the external load balancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: "schemaregistry-internal"
+  namespace: "{{ .Values.infrastructure.namespace }}"
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: "LoadBalancer"
+  ports:
+  - port: 8081
+    protocol: TCP
+  selector:
+    app: schemaregistry
+
+{{- end }}

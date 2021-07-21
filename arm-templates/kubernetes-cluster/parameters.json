@@ -1,0 +1,62 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "clusterName": {
+        "value": "izzyspark"
+      },
+      "systemPoolNodeCount": {
+        "value": 1
+      },
+      "systemPoolNodeType": {
+        "value": "Standard_D4s_v3"
+      },
+      "agentPoolNodeCount": {
+        "value": 3
+      },
+      "maxPods": {
+        "value": 64
+      },
+      "agentPoolNodeType": {
+        "value": "Standard_D8s_v3"
+      },
+      "kubernetesVersion": {
+        "value": "1.19.11"
+      },
+      "networkPlugin": {
+        "value": "azure"
+      },
+      "enableRBAC": {
+        "value": true
+      },
+      "enablePrivateCluster": {
+        "value": false
+      },
+      "enableHttpApplicationRouting": {
+        "value": false
+      },
+      "enableAzurePolicy": {
+        "value": false
+      },
+      "serviceCidr": {
+        "value": "10.71.0.0/16"
+      },
+      "dnsServiceIP": {
+        "value": "10.71.0.3"
+      },
+      "dockerBridgeCidr": {
+        "value": "172.17.0.1/16"
+      },
+      "addressSpaces": {
+        "value": [
+          "10.227.0.0/16"
+        ]
+      },
+      "subnetAddressSpace": {
+        "value": "10.227.0.0/20"
+      },
+      "ddosProtectionPlanEnabled": {
+        "value": false
+      }
+    }
+  }

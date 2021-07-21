@@ -1,0 +1,35 @@
+
+replicaCount: 1
+
+application:
+  labelValue: mysql
+
+# How to Install/Uninstall
+# helm upgrade --install mysql56 ./MySQL5.6
+# helm uninstall mysql56
+infrastructure:
+  namespace: mysql56
+  appName: mysql
+  username: topsecret
+  password: A8B4CD3F
+
+image:
+  name: mysql
+  pullPolicy: IfNotPresent
+  tag: "5.6.49"
+
+service:
+  type: LoadBalancer
+  port: 3306
+  protocol: TCP
+
+resources:
+  limits:
+     cpu: 1000m
+     memory: 2048Mi
+  requests:
+     cpu: 750m
+     memory: 1024Mi
+  volume:
+    size: 5Gi
+    storageClass: managed-premium

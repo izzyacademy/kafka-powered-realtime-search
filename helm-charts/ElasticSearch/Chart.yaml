@@ -1,0 +1,11 @@
+apiVersion: v2
+
+name: ElasticSearch
+
+description: A Helm chart for deploying a single node ElasticSearch  server
+
+type: application
+
+version: 1.0
+
+appVersion: 7.10.2
