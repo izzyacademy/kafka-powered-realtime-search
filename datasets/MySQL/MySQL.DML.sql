@@ -1,5 +1,7 @@
-I
-NSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
+
+-- mysql -u root -pA8B4CD3F ecommerce
+
+INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
 (599, 'April', 'Smith', 'asmith@example.org', NOW()),
 (601, 'James', 'Mathew', 'jmathew@example.org', NOW()),
 (607, 'Israel', 'Gonzalez', 'igonzalez@example.org', NOW()),
@@ -23,3 +25,7 @@ NSERT INTO `customers` (customer_id, first_name, last_name, email, date_created)
 (809, 'Michelle', 'Chanel', 'chanel.michelle@example.org', NOW()),
 (811, 'Sabestien', 'Lok', 'lok@example.org', NOW()),
 (821, 'Nancy', 'Pettite', 'n.pettite@example.org', NOW());
+
+
+UPDATE customers SET date_modified = NOW() WHERE customer_id = 599;
+UPDATE customers SET date_modified = NOW() WHERE customer_id = 601;
