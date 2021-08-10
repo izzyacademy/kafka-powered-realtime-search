@@ -1,0 +1,119 @@
+---
+# Run the compose file as follows
+# docker-compose -f connect-demo.yml up
+# docker-compose -f connect-demo.yml down --remove-orphans
+#
+version: '2'
+
+networks:
+  default:
+    name: izzyacademy_connect_streams
+
+services:
+
+  # You can use this to connect to the docker container once it is running
+  # docker exec -it debugger /bin/bash
+  debugger: # Debugger Node
+    image: izzyacademy/kafka-base:2.8
+    hostname: debugger
+    container_name: debugger
+    entrypoint: [ 'sleep', '48h' ]
+    depends_on:
+      - node1
+      - schema_registry
+      - connect
+
+  node1: # Kafka Broker Node
+    image: izzyacademy/kafka:2.8
+    hostname: node1
+    container_name: node1
+    ports:
+      - "29092:29092"
+      - "19092:19092"
+      - "9092:9092"
+      - "9102:9102"
+    environment:
+      KAFKA_NODE_ID: '1'
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_CLUSTER_ID: 'vlzHauhfTMq2S7cLtnwe6A'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@node1:19092'
+      KAFKA_LISTENERS: 'PLAINTEXT_HOST://0.0.0.0:29092,CONTROLLER://0.0.0.0:19092,PLAINTEXT://0.0.0.0:9092'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://node1:29092,PLAINTEXT_HOST://node1:9092 # do not include controller socket here
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_JMX_PORT: 9102
+      KAFKA_JMX_HOSTNAME: localhost
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+
+  schema_registry: # Schema Registry Node
+    image: confluentinc/cp-schema-registry:6.2.0
+    hostname: schema-registry
+    container_name: schema-registry
+    depends_on:
+      - node1
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'node1:9092'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+  
+  connect: # Kafka Connect Node
+    image: izzyacademy/cp-kafka-connect:6.2.0
+    hostname: connect
+    container_name: connect
+    depends_on:
+      - node1
+      - schema_registry
+      - elasticsearch
+      - mysql
+    ports:
+      - "8083:8083"
+    environment:
+      KAFKA_HEAP_OPTS: "-Xms1024m -Xmx1024m"
+      CONNECT_BOOTSTRAP_SERVERS: 'node1:9092'
+      CONNECT_REST_ADVERTISED_HOST_NAME: connect
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: compose-connect-group
+      CONNECT_CONFIG_STORAGE_TOPIC: docker-connect-configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_OFFSET_FLUSH_INTERVAL_MS: 10000
+      CONNECT_OFFSET_STORAGE_TOPIC: docker-connect-offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_STATUS_STORAGE_TOPIC: docker-connect-status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+      CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
+
+  elasticsearch: # ElasticSearch Node
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    hostname: elasticsearch
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - node.name=elasticsearch
+      - network.host=0.0.0.0
+      - cluster.name=es-docker-cluster
+      - bootstrap.memory_lock=true
+      - 'ES_JAVA_OPTS=-Xms256m -Xmx512m'
+      - discovery.type=single-node
+  mysql: # MySQL Node
+    image: mysql:8.0.23
+    hostname: mysql
+    container_name: mysql
+    ports:
+        - "3306:3306"
+    volumes:
+      - ./mysql:/etc/mysql/mysql.conf.d
+    environment:
+        MYSQL_ROOT_PASSWORD: zp3k4cc
