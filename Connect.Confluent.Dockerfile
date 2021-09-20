@@ -5,7 +5,7 @@ FROM confluentinc/cp-kafka-connect-base:6.2.0
 RUN confluent-hub install --no-prompt debezium/debezium-connector-mysql:1.6.0
 
 # Install the Source Connector for Cosmos DB
-RUN confluent-hub install --no-prompt microsoftcorporation/kafka-connect-cosmos:1.1.0
+RUN confluent-hub install --no-prompt microsoftcorporation/kafka-connect-cosmos:1.0.4-beta
 
 # Install the Sink Connector for ElasticSearch
 RUN confluent-hub install --no-prompt confluentinc/kafka-connect-elasticsearch:11.0.6

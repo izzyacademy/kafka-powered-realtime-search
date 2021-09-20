@@ -23,6 +23,7 @@ services:
       - schema_registry
       - connect
 
+  # docker exec -it node1 /bin/bash
   node1: # Kafka Broker Node
     image: izzyacademy/kafka:2.8
     hostname: node1
@@ -50,6 +51,9 @@ services:
       KAFKA_JMX_HOSTNAME: localhost
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
 
+  # docker exec -it schema-registry /bin/bash
+  # The avro console producers/consumers are available in /usr/bin
+  # ls -l /usr/bin/kafka-*
   schema_registry: # Schema Registry Node
     image: confluentinc/cp-schema-registry:6.2.0
     hostname: schema-registry
@@ -62,6 +66,21 @@ services:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'node1:9092'
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+
+  rest_proxy: # REST Proxy Node
+    image: confluentinc/cp-kafka-rest:6.2.0
+    hostname: rest-proxy
+    container_name: rest-proxy
+    depends_on:
+      - node1
+      - schema_registry
+    ports:
+      - "8082:8082"
+    environment:
+      KAFKA_REST_HOST_NAME: rest-proxy
+      KAFKA_REST_BOOTSTRAP_SERVERS: 'node1:9092'
+      KAFKA_REST_LISTENERS: http://0.0.0.0:8082
+      KAFKA_REST_SCHEMA_REGISTRY_URL: http://schema-registry:8081
   
   connect: # Kafka Connect Node
     image: izzyacademy/cp-kafka-connect:6.2.0
@@ -107,8 +126,9 @@ services:
       - bootstrap.memory_lock=true
       - 'ES_JAVA_OPTS=-Xms256m -Xmx512m'
       - discovery.type=single-node
+  # docker exec -it mysql /bin/bash
   mysql: # MySQL Node
-    image: mysql:8.0.23
+    image: mysql:5.6.51
     hostname: mysql
     container_name: mysql
     ports:

@@ -124,7 +124,7 @@ services:
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
   
   connect:
-    image: izzyacademy/cp-kafka-connect:6.2.0
+    image: izzyacademy/cp-kafka-connect:mvp
     hostname: connect
     container_name: connect
     depends_on:

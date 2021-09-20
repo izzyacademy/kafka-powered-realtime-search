@@ -1,6 +1,7 @@
+-- Connect to Docker Container
+-- Authenticate and Select Target Database
 
--- mysql -u root -pA8B4CD3F ecommerce
-
+-- Load Initial Data set
 INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
 (599, 'April', 'Smith', 'asmith@example.org', NOW()),
 (601, 'James', 'Mathew', 'jmathew@example.org', NOW()),
@@ -26,14 +27,22 @@ INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created
 (811, 'Sabestien', 'Lok', 'lok@example.org', NOW()),
 (821, 'Nancy', 'Pettite', 'n.pettite@example.org', NOW());
 
+-- Use these DML statements during the demo
+-- Create new record
 INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
 (821, 'Nancy', 'Pettite', 'n.pettite@example.org', NOW());
 
+-- Create new record
 INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
 (823, 'Mena', 'Bravo', 'mena.bravo@example.org', NOW());
 
+-- Modify existing record
 UPDATE customers SET first_name = 'Mena2', last_name = 'Bravo2', email='mena@microsoft.com'
 WHERE customer_id = 823;
 
+-- Modify existing records
 UPDATE customers SET date_modified = NOW() WHERE customer_id = 599;
 UPDATE customers SET date_modified = NOW() WHERE customer_id = 601;
+
+-- Remove existing records
+DELETE FROM customers WHERE customer_id = 821;

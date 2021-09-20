@@ -1,3 +1,6 @@
+-- Connect to Docker Container
+-- Authenticate and Select Target Database
+
 USE ecommerce;
 
 DROP TABLE IF EXISTS `customers`;
@@ -7,10 +10,7 @@ CREATE TABLE `customers` (
   `last_name` varchar(128) NOT NULL DEFAULT '' COMMENT 'Last name of the customer',
   `email` varchar(128) NOT NULL DEFAULT '' COMMENT 'Email of the customer',
   `date_created` DATETIME NOT NULL DEFAULT '2020-01-01 16:00:00' COMMENT 'When this record was created',
-  `date_modified` TIMESTAMP NOT NULL COMMENT 'When this record was last updated',
+  `date_modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'When this record was last updated',
   PRIMARY KEY (`customer_id`),
   KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Used to store customers';
-
-
-
