@@ -24,3 +24,5 @@ ls -l /usr/bin/kafka-*
 /usr/bin/kafka-avro-console-consumer --bootstrap-server node1:9092  --from-beginning --property schema.registry=http://schema-registry:8081 --topic estreams85.ecommerce.customers
 
 ```
+
+![Console Consumer](kafka-console-consumer.png "Kafka Console Consumer")

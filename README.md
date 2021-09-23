@@ -47,11 +47,17 @@ We have the following SQL scripts in the datasets/MySQL directory
 - MySQL.1.DDL.sql (contains the data definition language for creating the customers table)
 - MySQL.2.DML.sql (contains the data manipulation language for SELECTs, INSERTs, UPDATEs, and DELETEs on the customers table)
 
+![SQL Script](SQL.png "MySQL DDL and DML scripts")
+
 These SQL scripts will be used to interact with the data that will generate CDC (change-data-capture) events for our demonstration.
 
 The CDC changes will be picked up by the Debezium Kafka Connect Source connector and pushed into our Kafka broker. When rows are deleted, tombstone records (events with defined keys but null values) will be created and sent into the topics to indicate that those records should be removed from the ElasticSearch instance.
 
+![Console Consumer](kafka-console-consumer.png "Kafka Console Consumer")
+
 INSERTs and UPDATEs will create and update ElasticSearch documents. DELETE statements will generate tombstone records that will cause the ElasticSearch Sink connector to remove documents with those ids from the Search indices.
+
+![ElasticSearch Queries Kafka Connect](elasticsearch.png "ElasticSearch Queries")
 
 ## Debugging and Watching the Topics
 
