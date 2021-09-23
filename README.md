@@ -66,4 +66,4 @@ Inside the datasets/Postman directory, the "Kafka-Powered DB-Search Sync.json" P
 - Kafka Connect Instances
 - ElasticSearch instance
 
-![Postman Script](./Postman/Postman-Screen.png "Postman Demo")
+![Postman Script](datasets/Postman/Postman-Screen.png "Postman Demo")
