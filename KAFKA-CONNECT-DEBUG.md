@@ -3,7 +3,6 @@
 
 To debug the Avro topics in our setup lets use the following commands
 
-
 ```shell
 
 docker exec -it schema-registry /bin/bash
