@@ -27,22 +27,35 @@ INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created
 (811, 'Sabestien', 'Lok', 'lok@example.org', NOW()),
 (821, 'Nancy', 'Pettite', 'n.pettite@example.org', NOW());
 
+-- Display all the inserted records/rows
+SELECT * FROM `customers`;
+
 -- Use these DML statements during the demo
 -- Create new record
 INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
 (821, 'Nancy', 'Pettite', 'n.pettite@example.org', NOW());
 
+SELECT * FROM `customers`;
+
 -- Create new record
 INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
 (823, 'Mena', 'Bravo', 'mena.bravo@example.org', NOW());
+
+SELECT * FROM `customers`;
 
 -- Modify existing record
 UPDATE customers SET first_name = 'Mena2', last_name = 'Bravo2', email='mena@microsoft.com'
 WHERE customer_id = 823;
 
+SELECT * FROM `customers`;
 -- Modify existing records
 UPDATE customers SET date_modified = NOW() WHERE customer_id = 599;
 UPDATE customers SET date_modified = NOW() WHERE customer_id = 601;
 
+SELECT * FROM `customers`;
+
 -- Remove existing records
 DELETE FROM customers WHERE customer_id = 821;
+
+SELECT * FROM `customers`;
+

@@ -3,9 +3,16 @@
 -- docker exec -it mysql /bin/bash
 
 -- Connect to the database server locally
--- mysql -u root -pzp3k4cc ecommerce
+-- mysql -u root -p{password}
+-- mysql -u root -pzp3k4cc
 
--- docker exec -it mysql /usr/bin/mysql -u root -pzp3k4cc {databaseName}
+-- Login Directly to the MySQL console
+-- docker exec -it mysql /usr/bin/mysql -u root -p{password}
+-- docker exec -it mysql /usr/bin/mysql -u root -pzp3k4cc
+
+-- You can also log in and attach to a specific database using a sinlge step instead of multiple steps
+-- docker exec -it mysql /usr/bin/mysql -u root -p{password} {databaseName}
+-- docker exec -it mysql /usr/bin/mysql -u root -pzp3k4cc ecommerce
 
 -- Select the MySQL database
 USE mysql;

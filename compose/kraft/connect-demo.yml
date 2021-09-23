@@ -1,4 +1,7 @@
 ---
+# This compose file uses Apache Kafka 2.8.0 together with the following components
+# Confluent Schema Registry, Confluent REST Proxy, Kafka Connect, ElasticSearch and MySQL docker containers
+
 # Run the compose file as follows
 # docker-compose -f connect-demo.yml up
 # docker-compose -f connect-demo.yml down --remove-orphans
