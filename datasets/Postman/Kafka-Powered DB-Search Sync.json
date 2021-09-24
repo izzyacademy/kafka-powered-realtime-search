@@ -112,7 +112,7 @@
 					"response": []
 				},
 				{
-					"name": "GET TOPIC DETAILS - CUSTOMERS",
+					"name": "GET TOPIC DETAILS - CUSTOMERS 75",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -138,7 +138,7 @@
 					"response": []
 				},
 				{
-					"name": "GET TOPIC DETAILS - CUSTOMER 2",
+					"name": "GET TOPIC DETAILS - CUSTOMER 85",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -213,7 +213,36 @@
 					"response": []
 				},
 				{
-					"name": "CREATE CUSTOMERS  SOURCE",
+					"name": "CREATE CUSTOMERS  SOURCE 65 RAW",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"ecommerce-customers-streams-65\",\n    \"config\": {\n      \"connector.class\": \"io.debezium.connector.mysql.MySqlConnector\",\n      \"database.hostname\": \"mysql\",\n      \"database.port\": \"3306\",\n      \"database.user\": \"debezium\",\n      \"database.password\": \"db3k4Cc\",\n      \"database.server.id\": \"65\",\n      \"database.server.name\": \"estreams65\",\n      \"table.include.list\" : \"ecommerce.customers\",\n      \"database.history.kafka.bootstrap.servers\": \"node1:9092\",\n      \"database.history.kafka.topic\": \"dbhistory.estreams65\",\n      \"include.schema.changes\": \"false\",\n      \"key.converter\": \"io.confluent.connect.avro.AvroConverter\",\n      \"key.converter.schema.registry.url\": \"http://schema-registry:8081\",\n      \"value.converter\": \"io.confluent.connect.avro.AvroConverter\",\n      \"value.converter.schema.registry.url\": \"http://schema-registry:8081\"\n    }\n  }"
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CREATE CUSTOMERS  SOURCE 75",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -242,7 +271,7 @@
 					"response": []
 				},
 				{
-					"name": "CREATE CUSTOMERS  SOURCE with Predicate",
+					"name": "CREATE CUSTOMERS  SOURCE 85 with Predicate",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -271,7 +300,7 @@
 					"response": []
 				},
 				{
-					"name": "CREATE CUSTOMERS ES SINK CONNECTOR",
+					"name": "CREATE CUSTOMERS ES SINK 75",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -300,7 +329,7 @@
 					"response": []
 				},
 				{
-					"name": "CREATE CUSTOMERS ES SINK 2",
+					"name": "CREATE CUSTOMERS ES SINK 85",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -329,7 +358,40 @@
 					"response": []
 				},
 				{
-					"name": "GET CUSTOMERS SOURCE CONNECTOR DETAILS",
+					"name": "GET CUSTOMERS SOURCE 65 RAW DETAILS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/ecommerce-customers-streams-65",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"ecommerce-customers-streams-65"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET CUSTOMERS SOURCE 75 DETAILS",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -362,7 +424,7 @@
 					"response": []
 				},
 				{
-					"name": "GET CUSTOMERS SOURCE PREDICATE DETAILS",
+					"name": "GET CUSTOMERS SOURCE 85 DETAILS",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -395,7 +457,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE CUSTOMERS",
+					"name": "DELETE CUSTOMERS 75",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -425,7 +487,7 @@
 					"response": []
 				},
 				{
-					"name": "DELETE ES SINK CONNECTOR",
+					"name": "DELETE ES SINK 85",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -440,7 +502,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://{{kafka-connect-host}}:8083/connectors/elasticsearch-customers",
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/elasticsearch-customers-85",
 							"protocol": "http",
 							"host": [
 								"{{kafka-connect-host}}"
@@ -448,14 +510,48 @@
 							"port": "8083",
 							"path": [
 								"connectors",
-								"elasticsearch-customers"
+								"elasticsearch-customers-85"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GET CUSTOMERS CONNECTOR STATUS",
+					"name": "GET CUSTOMERS RAW 65 STATUS",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://{{kafka-connect-host}}:8083/connectors/ecommerce-customers-streams-65/status",
+							"protocol": "http",
+							"host": [
+								"{{kafka-connect-host}}"
+							],
+							"port": "8083",
+							"path": [
+								"connectors",
+								"ecommerce-customers-streams-65",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET CUSTOMERS 75 STATUS",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -489,7 +585,7 @@
 					"response": []
 				},
 				{
-					"name": "GET CUSTOMERS CONNECTOR with Predicate STATUS",
+					"name": "GET CUSTOMERS 85 with Predicate STATUS",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -523,7 +619,7 @@
 					"response": []
 				},
 				{
-					"name": "GET  CUSTOMERS ES SINK STATUS",
+					"name": "GET  CUSTOMERS ES 75 SINK STATUS",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -557,7 +653,7 @@
 					"response": []
 				},
 				{
-					"name": "GET  CUSTOMERS ES SINK 2 STATUS",
+					"name": "GET  CUSTOMERS ES 85 SINK STATUS",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -591,7 +687,7 @@
 					"response": []
 				},
 				{
-					"name": "RESTART CUSTOMERS SOURCE",
+					"name": "RESTART CUSTOMERS 75 SOURCE",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -622,7 +718,7 @@
 					"response": []
 				},
 				{
-					"name": "RESTART CUSTOMERS 2 SOURCE",
+					"name": "RESTART CUSTOMERS 85 SOURCE",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -653,7 +749,7 @@
 					"response": []
 				},
 				{
-					"name": "PAUSE CUSTOMERS 2 SOURCE",
+					"name": "PAUSE CUSTOMERS 85 SOURCE",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -684,7 +780,7 @@
 					"response": []
 				},
 				{
-					"name": "RESUME CUSTOMERS 2 SOURCE",
+					"name": "RESUME CUSTOMERS 85 SOURCE",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -715,7 +811,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE CUSTOMERS 2 CONNECTOR CONFIG",
+					"name": "UPDATE CUSTOMERS 75 CONNECTOR CONFIG",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -746,7 +842,7 @@
 					"response": []
 				},
 				{
-					"name": "UPDATE ES CONNECTOR CONFIG",
+					"name": "UPDATE ES 85 SINK CONFIG",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -885,7 +981,7 @@
 					"response": []
 				},
 				{
-					"name": "SEARCH INDEX - CUSTOMERS",
+					"name": "SEARCH SPECIFIC - CUSTOMERS 85",
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -943,7 +1039,7 @@
 					"response": []
 				},
 				{
-					"name": "SEARCH INDEX - CUSTOMERS ALL",
+					"name": "SEARCH SHOW CUSTOMERS ALL 85",
 					"request": {
 						"auth": {
 							"type": "basic",
@@ -979,7 +1075,7 @@
 							"raw": "{\r\n  \"query\": {\r\n        \"match_all\": {}\r\n    }\r\n}"
 						},
 						"url": {
-							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/estreams85.ecommerce.customers/_search",
+							"raw": "{{elastic-protocol}}://{{elasticsearch-host}}:9200/estreams85.ecommerce.customers/_search?from=0&size=1024",
 							"protocol": "{{elastic-protocol}}",
 							"host": [
 								"{{elasticsearch-host}}"
@@ -990,6 +1086,14 @@
 								"_search"
 							],
 							"query": [
+								{
+									"key": "from",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "1024"
+								},
 								{
 									"key": "pretty",
 									"value": null,
@@ -1060,6 +1164,28 @@
 							"path": [
 								"subjects",
 								"estreams75.ecommerce.customers-value",
+								"versions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET CUSTOMERS KEY VERSION DETAILS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{confluent-schemaregistry-host}}:8081/subjects/estreams65.ecommerce.customers-key/versions/1",
+							"protocol": "http",
+							"host": [
+								"{{confluent-schemaregistry-host}}"
+							],
+							"port": "8081",
+							"path": [
+								"subjects",
+								"estreams65.ecommerce.customers-key",
 								"versions",
 								"1"
 							]
