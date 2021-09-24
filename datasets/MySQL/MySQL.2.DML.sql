@@ -31,19 +31,20 @@ INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created
 SELECT * FROM `customers`;
 
 -- Use these DML statements during the demo
--- Create new record
-INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
-(821, 'Nancy', 'Pettite', 'n.pettite@example.org', NOW());
-
-SELECT * FROM `customers`;
 
 -- Create new record
 INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
 (823, 'Mena', 'Bravo', 'mena.bravo@example.org', NOW());
 
+INSERT INTO `customers` (customer_id, first_name, last_name, email, date_created) VALUES
+(901, 'Izzy', 'Bravo', 'izzy.bravo@example.org', NOW());
+
 SELECT * FROM `customers`;
 
 -- Modify existing record
+
+UPDATE customers SET first_name = 'Izzy' WHERE customer_id = 599;
+
 UPDATE customers SET first_name = 'Mena2', last_name = 'Bravo2', email='mena@microsoft.com'
 WHERE customer_id = 823;
 

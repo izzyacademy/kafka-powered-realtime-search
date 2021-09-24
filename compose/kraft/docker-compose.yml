@@ -3,9 +3,9 @@
 # Confluent Schema Registry, Confluent REST Proxy, Kafka Connect, ElasticSearch and MySQL docker containers
 
 # Run the compose file as follows
-# docker-compose -f connect-demo.yml up
-# docker-compose -f connect-demo.yml down --remove-orphans
-#
+# docker-compose up
+# docker-compose down --remove-orphans
+
 version: '2'
 
 networks:

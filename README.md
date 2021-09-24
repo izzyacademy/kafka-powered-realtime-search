@@ -1,9 +1,10 @@
 # Kafka-Powered Realtime Search
 
+Welcome. In this tutorial, we walk you through how to use Kafka Connect to sync up datastores with your search stores.
 
 ## Setting up the Relative Volumes for Kafka and MySQL
 
-Navigate to the compose/kraft folder and create folders that will be mounted as volumes in the docker compose scripts. 
+Navigate to the compose/kraft directory and create folders that will be mounted as volumes in the docker compose scripts. 
 
 We need to create the following data directories inside the compose/kraft folder/directory:
 
@@ -12,7 +13,7 @@ We need to create the following data directories inside the compose/kraft folder
 
 These folders will be used for storing the local Kafka data and MySQL data.
 
-```shell
+```bash
 
 # Navigate to the KRaft folder
 cd compose/kraft
@@ -24,15 +25,17 @@ cd compose/kraft
 
 ```
 
+Note: If you are working on non-UNIX systems other than Linux or Mac OS X, please manually remove and recreate these directories.
+
 ## Booting Up the Cluster
 
-```shell
+```bash
 
 # Run this command to boot up the cluster
-docker-compose -f connect-demo.yml up
+docker-compose up
 
 # Run this command to shut down and clean up
-docker-compose -f connect-demo.yml down --remove-orphans
+docker-compose --remove-orphans
 
 ```
 
@@ -53,6 +56,8 @@ These SQL scripts will be used to interact with the data that will generate CDC 
 
 The CDC changes will be picked up by the Debezium Kafka Connect Source connector and pushed into our Kafka broker. When rows are deleted, tombstone records (events with defined keys but null values) will be created and sent into the topics to indicate that those records should be removed from the ElasticSearch instance.
 
+We can use the commands available in the [connect debug script](KAFKA-CONNECT-DEBUG.md) to watch changes that are happening in the Kafka topics.
+
 ![Console Consumer](kafka-console-consumer.png "Kafka Console Consumer")
 
 INSERTs and UPDATEs will create and update ElasticSearch documents. DELETE statements will generate tombstone records that will cause the ElasticSearch Sink connector to remove documents with those ids from the Search indices.
@@ -61,7 +66,7 @@ INSERTs and UPDATEs will create and update ElasticSearch documents. DELETE state
 
 ## Debugging and Watching the Topics
 
-We can use the command available in the [connect debug script](KAFKA-CONNECT-DEBUG.md) to watch changes that are happening in the Kafka topics.
+Let's use the commands available in the [connect debug script](KAFKA-CONNECT-DEBUG.md) to watch changes that are happening in the Kafka topics.
 
 ## Setting up Postman
 
@@ -73,3 +78,22 @@ Inside the datasets/Postman directory, the "Kafka-Powered DB-Search Sync.json" P
 - ElasticSearch instance
 
 ![Postman Script](datasets/Postman/Postman-Screen.png "Postman Demo")
+
+
+## References
+
+[Kafka Connect Documentation](https://kafka.apache.org/documentation.html#connect)
+
+[MySQL Debezium Source Connector](https://debezium.io/documentation/reference/connectors/mysql.html#how-the-mysql-connector-works)
+
+[ElasticSearch Sink Connector](https://docs.confluent.io/kafka-connect-elasticsearch/current/overview.html#configuration-properties)
+
+[Apache Kafka SMTs](https://docs.confluent.io/platform/current/connect/transforms/overview.html)
+
+[Apache Kafka Connect Predicates](https://docs.confluent.io/platform/current/connect/transforms/filter-ak.html)
+
+[ElasticSearch Search Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html#search-search-api-request)
+
+[ElasticSearch Search Query Samples via CURL](ELASTICSEARCH.md)
+
+[Kafka Console Consumer Samples](KAFKA-CONNECT-DEBUG.md) 

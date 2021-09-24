@@ -21,14 +21,14 @@ USE mysql;
 SELECT User,Host,Password FROM mysql.user;
 
 -- Create a new root user and grant permissions to all resources
---- CREATE USER 'root'@'localhost' IDENTIFIED BY 'db3k4Cc';
+-- CREATE USER 'root'@'localhost' IDENTIFIED BY 'db3k4Cc';
 
 -- GRANT ALL PRIVILEGES ON *.* TO 'root'@'localhost';
 
 -- Remove all unsafe user accounts
 DELETE FROM mysql.user WHERE LENGTH(User) = 0 OR LENGTH(Password) = 0;
 
---- Set up Database for storing application data
+-- Set up Database for storing application data
 DROP DATABASE IF EXISTS ecommerce;
 CREATE DATABASE ecommerce DEFAULT CHARACTER SET utf8;
 
