@@ -35,10 +35,9 @@ Note: If you are working on non-UNIX systems other than Linux or Mac OS X, pleas
 docker-compose up
 
 # Run this command to shut down and clean up
-docker-compose --remove-orphans
+docker-compose down --remove-orphans
 
 ```
-
 
 ## Loading Up the Data
 
