@@ -1,6 +1,6 @@
 # Kafka-Powered Realtime Search
 
-Welcome. In this tutorial, we walk you through how to use Kafka Connect to sync up datastores with your search stores.
+Welcome. In this tutorial, we walk you through how to use Kafka Connect to sync up datastores with your search stores such as ElasticSearch.
 
 ## Setting up the Relative Volumes for Kafka and MySQL
 
