@@ -16,5 +16,5 @@ echo "Creating Kafka and MySQL data directories"
 echo ""
 mkdir -pv "${KAFKA_DATA_DIRECTORY}" "${MYSQL_DATA_DIRECTORY}"
 
-echo ""
+echo " "
 echo "Reset Complete"
