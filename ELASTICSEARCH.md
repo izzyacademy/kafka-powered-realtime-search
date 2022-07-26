@@ -21,7 +21,7 @@ curl --location --request POST 'http://localhost:9200/estreams85.ecommerce.custo
 
 ```
 
-This searches for and displays top 10 records in the index.
+This searches for and displays the top 10 records in the index.
 
 ```bash
 
