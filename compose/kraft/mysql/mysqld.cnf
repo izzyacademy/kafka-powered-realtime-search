@@ -8,7 +8,7 @@
 
     #log-error      = /var/log/mysql/error.log
 
-    # Disabling symbolic-links is recommended to prevent assorted security risks
+    # Disabling symbolic-links is recommended to prevent any security risks
     symbolic-links=0
 
     # The value of log_bin is the base name of the sequence of binlog files.
