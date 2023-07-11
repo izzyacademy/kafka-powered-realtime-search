@@ -9,7 +9,7 @@ We can use the same command for each of the topics we are exploring:
 - estreams75.ecommerce.customers
 - estreams85.ecommerce.customers
 
-I decided to create three separate topics to illustrate some of the setup differences for the Kafka Connect configuration.
+I decided to create 3 separate topics to illustrate some of the setup differences for the Kafka Connect configuration.
 
 The first topic, **estreams65.ecommerce.customers** is the original setup capturing CDC changes from the MySQL Debezium Connector in is raw and original form.
 
