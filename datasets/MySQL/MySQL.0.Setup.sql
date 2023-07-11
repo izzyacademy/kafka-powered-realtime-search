@@ -1,5 +1,5 @@
 
--- Log into the remote container
+-- Log into the remote Docker container
 -- docker exec -it mysql /bin/bash
 
 -- Connect to the database server locally
