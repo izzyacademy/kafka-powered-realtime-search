@@ -1,5 +1,6 @@
 mysql-data
 kafka-data
+kraft-data
 # Python Folders and Files
 venv
 .idea
