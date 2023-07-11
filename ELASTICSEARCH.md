@@ -24,7 +24,6 @@ curl --location --request POST 'http://localhost:9200/estreams85.ecommerce.custo
 This searches for and displays the top 10 records in the index.
 
 ```bash
-
 curl --location --request POST 'http://localhost:9200/estreams85.ecommerce.customers/_search' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -32,7 +31,6 @@ curl --location --request POST 'http://localhost:9200/estreams85.ecommerce.custo
         "match_all": {}
     }
 }'
-
 ```
 
 This searches for and displays all the records in the index.
