@@ -1,6 +1,6 @@
 # Kafka-Powered Realtime Search
 
-Welcome. In this tutorial, we walk you through how to use Kafka Connect to sync up datastores with your search stores such as ElasticSearch.
+Welcome to Kafka-Powered Realtime Search. In this tutorial, we walk you through how to use Kafka Connect to sync up datastores with your search stores such as ElasticSearch.
 
 ## Setting up the Relative Volumes for Kafka and MySQL
 
@@ -89,7 +89,7 @@ Inside the datasets/Postman directory, the "Kafka-Powered DB-Search Sync.json" P
 
 [Apache Kafka SMTs](https://docs.confluent.io/platform/current/connect/transforms/overview.html)
 
-[Apache Kafka Connect Predicates](https://docs.confluent.io/platform/current/connect/transforms/filter-ak.html)
+[Apache Kafka Connect Predicates](https://docs.confluent.io/platform/current/connect/transforms/filter-ak.html) 
 
 [ElasticSearch Search Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html#search-search-api-request)
 
